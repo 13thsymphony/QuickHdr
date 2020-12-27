@@ -64,6 +64,8 @@ namespace UIAutomationExperiment
             TogglePattern toggle = (TogglePattern)HdrToggle.GetCurrentPattern(TogglePattern.Pattern);
             ToggleState currState = toggle.Current.ToggleState;
             toggle.Toggle();
+
+            e.Handled = true;
         }
 
         /// <summary>
