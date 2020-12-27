@@ -5,12 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
-using System.Windows.Forms;
+using System.Windows.Input;
+using NHotkey;
+using NHotkey.Wpf;
 
 namespace UIAutomationExperiment
 {
     class Program
     {
+        [STAThread]
+
         static void Main(string[] args)
         {
             var psi = new ProcessStartInfo
@@ -35,12 +39,26 @@ namespace UIAutomationExperiment
 
             WalkEnabledElementsWithLimit(settingsApp, 5);
 
-            AutomationElement hdrToggle = settingsApp.FindFirst
+            HdrToggle = settingsApp.FindFirst
                 (TreeScope.Descendants, new PropertyCondition
                     (AutomationElement.AutomationIdProperty, "SystemSettings_Display_AdvancedColorSupport_ToggleSwitch"));
 
-            TogglePattern toggle = (TogglePattern)hdrToggle.GetCurrentPattern(TogglePattern.Pattern);
-            ToggleState state = toggle.Current.ToggleState;
+            HotkeyManager.Current.AddOrReplace("Toggle HDR", Key.H, ModifierKeys.Windows | ModifierKeys.Control, OnHdrToggle);
+
+            //ToggleHdrState();
+        }
+
+        static private AutomationElement HdrToggle;
+
+        static private void OnHdrToggle(object sender, HotkeyEventArgs e)
+        {
+            if (HdrToggle == null)
+            {
+                return;
+            }
+
+            TogglePattern toggle = (TogglePattern)HdrToggle.GetCurrentPattern(TogglePattern.Pattern);
+            ToggleState currState = toggle.Current.ToggleState;
             toggle.Toggle();
         }
 
