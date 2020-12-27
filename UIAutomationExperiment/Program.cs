@@ -45,6 +45,10 @@ namespace UIAutomationExperiment
 
             HotkeyManager.Current.AddOrReplace("Toggle HDR", Key.H, ModifierKeys.Windows | ModifierKeys.Control, OnHdrToggle);
 
+            Console.WriteLine("Awaiting CTRL+WIN+H hotkey. Press any key to exit.");
+
+            Console.ReadLine();
+
             //ToggleHdrState();
         }
 
