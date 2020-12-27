@@ -34,6 +34,14 @@ namespace UIAutomationExperiment
             }
 
             WalkEnabledElementsWithLimit(settingsApp, 5);
+
+            AutomationElement hdrToggle = settingsApp.FindFirst
+                (TreeScope.Descendants, new PropertyCondition
+                    (AutomationElement.AutomationIdProperty, "SystemSettings_Display_AdvancedColorSupport_ToggleSwitch"));
+
+            TogglePattern toggle = (TogglePattern)hdrToggle.GetCurrentPattern(TogglePattern.Pattern);
+            ToggleState state = toggle.Current.ToggleState;
+            toggle.Toggle();
         }
 
         /// <summary>
@@ -48,7 +56,12 @@ namespace UIAutomationExperiment
                 return;
             }
 
-            Console.WriteLine(levelsToRecurse + ": " + element.Current.Name);
+            Console.WriteLine(levelsToRecurse + ": " + element.Current.Name + " " + element.Current.ClassName);
+
+            if (element.Current.AutomationId == "SystemSettings_Display_AdvancedColorSupport_ToggleSwitch")
+            {
+                
+            }
 
             Condition condition1 = new PropertyCondition(AutomationElement.IsControlElementProperty, true);
             Condition condition2 = new PropertyCondition(AutomationElement.IsEnabledProperty, true);
