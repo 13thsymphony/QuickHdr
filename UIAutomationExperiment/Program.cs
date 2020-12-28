@@ -20,7 +20,8 @@ namespace UIAutomationExperiment
             var psi = new ProcessStartInfo
             {
                 FileName = "ms-settings:display",
-                UseShellExecute = true
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Minimized
             };
             var proc = Process.Start(psi);
 
