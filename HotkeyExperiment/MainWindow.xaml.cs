@@ -26,22 +26,26 @@ namespace HotkeyExperiment
     public partial class MainWindow : Window
     {
         private TaskbarIcon tb;
-        private WindowInteropHelper winHelper;
+        private WindowInteropHelper winHelp;
+        private DXManager dx;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            winHelper = new WindowInteropHelper(this);
-
             tb = (TaskbarIcon)FindResource("NotifyIcon");
 
             HotkeyManager.Current.AddOrReplace("Toggle HDR", Key.H, ModifierKeys.Control | ModifierKeys.Windows, OnHotkey);
         }
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            winHelp = new WindowInteropHelper(this);
+            dx = new DXManager(winHelp.Handle);
+        }
 
         private void OnHotkey(object sender, HotkeyEventArgs e)
         {
-            Output.Text += e.Name + "\n";
+            Output.Text += "HDR State: " + dx.IsHdrActive() + " " + e.Name + "\n";
             e.Handled = true;
         }
     }

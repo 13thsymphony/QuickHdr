@@ -16,17 +16,34 @@ namespace HotkeyExperiment
     {
         SharpDX.Direct3D11.Device D3DDevice;
         SwapChain1 DxgiSwapChain;
-        Output6 DxgiOutput6;
+        Factory2 DxgiFactory;
+        IntPtr Hwnd;
 
         public DXManager(IntPtr windowHandle)
         {
+            Hwnd = windowHandle;
+
             SharpDX.Direct3D.FeatureLevel[] featureLevels =
             {
                 SharpDX.Direct3D.FeatureLevel.Level_11_0 // Minimum requirement for HDR support.
             };
 
-            D3DDevice = new SharpDX.Direct3D11.Device(SharpDX.Direct3D.DriverType.Hardware, DeviceCreationFlags.None, featureLevels);
+#if DEBUG
+            DeviceCreationFlags flags = DeviceCreationFlags.Debug;
+#else
+            DeviceCreationFlags flags = DeviceCreationFlags.None;
+#endif
+            {
 
+            }
+
+            D3DDevice = new SharpDX.Direct3D11.Device(SharpDX.Direct3D.DriverType.Hardware, flags, featureLevels);
+
+            DxgiFactory = new Factory2();
+        }
+
+        public bool IsHdrActive()
+        {
             SwapChainDescription1 desc = new SwapChainDescription1
             {
                 AlphaMode = AlphaMode.Ignore,
@@ -42,10 +59,22 @@ namespace HotkeyExperiment
                 Usage = Usage.RenderTargetOutput
             };
 
-            Factory2 factory = new Factory2();
+            // TODO: Swapchain creation is fairly expensive, optimize this with the D3D12HDR method.
+            SwapChain1 sc1 = new SwapChain1(DxgiFactory, D3DDevice, Hwnd, ref desc);
+            Output6 output6 = sc1.ContainingOutput.QueryInterface<Output6>();
 
-            SwapChain1 sc1 = new SwapChain1(factory, D3DDevice, ref desc);
-            
+            switch (output6.Description1.ColorSpace)
+            {
+                case ColorSpaceType.RgbFullG2084NoneP2020:
+                    return true;
+
+                case ColorSpaceType.RgbFullG22NoneP709:
+                    return false;
+
+                default:
+                    // Unexpected!
+                    return false;
+            }
         }
     }
 }
