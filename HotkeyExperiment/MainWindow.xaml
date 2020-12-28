@@ -16,6 +16,5 @@
     </Window.Resources>
     <Grid>
         <TextBlock x:Name="Output"></TextBlock>
-        <tb:TaskbarIcon ToolTipText="Testing!!" />
     </Grid>
 </Window>

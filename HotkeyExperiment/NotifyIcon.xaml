@@ -3,6 +3,6 @@
                     xmlns:tb="http://www.hardcodet.net/taskbar"
                     xmlns:local="clr-namespace:HotkeyExperiment">
 
-    <tb:TaskbarIcon x:Key="NotifyIcon" IconSource="hdr_bw.ico" ToolTipText="HDR quick toggle" />
+    <tb:TaskbarIcon x:Key="NotifyIcon" IconSource="pack://application:,,,/hdr_bw.ico" ToolTipText="HDR quick toggle" />
 
 </ResourceDictionary>
