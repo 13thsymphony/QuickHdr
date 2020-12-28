@@ -37,7 +37,7 @@ namespace UIAutomationExperiment
                 Console.WriteLine("Could not access Settings app");
             }
 
-            WalkEnabledElementsWithLimit(settingsApp, 5);
+            //WalkEnabledElementsWithLimit(settingsApp, 5);
 
             HdrToggle = settingsApp.FindFirst
                 (TreeScope.Descendants, new PropertyCondition
