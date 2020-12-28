@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="hdr_bw.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="hdr_bw.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
     <PackageReference Include="NHotkey.Wpf" Version="2.1.0" />
   </ItemGroup>
 

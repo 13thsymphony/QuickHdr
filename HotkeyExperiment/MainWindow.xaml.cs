@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Hardcodet.Wpf.TaskbarNotification;
 using NHotkey;
 using NHotkey.Wpf;
 
@@ -23,9 +24,12 @@ namespace HotkeyExperiment
     /// </summary>
     public partial class MainWindow : Window
     {
+        private TaskbarIcon tb;
         public MainWindow()
         {
             InitializeComponent();
+
+            tb = (TaskbarIcon)FindResource("NotifyIcon");
 
             HotkeyManager.Current.AddOrReplace("Toggle HDR", Key.H, ModifierKeys.Control | ModifierKeys.Windows, OnHotkey);
         }
