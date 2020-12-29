@@ -21,7 +21,7 @@ using NHotkey.Wpf;
 namespace HotkeyExperiment
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// The only purpose for having a Window is to provide the DXManager with a Window handle (HWND).
     /// </summary>
     public partial class MainWindow : Window
     {

@@ -7,7 +7,9 @@
         xmlns:local="clr-namespace:HotkeyExperiment"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        Loaded="OnLoaded">
+        Loaded="OnLoaded"
+        Visibility="Hidden"
+        ShowInTaskbar="False">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
