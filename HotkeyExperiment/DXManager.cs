@@ -15,7 +15,6 @@ namespace HotkeyExperiment
     class DXManager
     {
         SharpDX.Direct3D11.Device D3DDevice;
-        SwapChain1 DxgiSwapChain;
         Factory2 DxgiFactory;
         IntPtr Hwnd;
 
@@ -25,7 +24,7 @@ namespace HotkeyExperiment
 
             SharpDX.Direct3D.FeatureLevel[] featureLevels =
             {
-                SharpDX.Direct3D.FeatureLevel.Level_11_0 // Minimum requirement for HDR support.
+                SharpDX.Direct3D.FeatureLevel.Level_11_0 // This is practically the min requirement for HDR support.
             };
 
 #if DEBUG
@@ -60,20 +59,22 @@ namespace HotkeyExperiment
             };
 
             // TODO: Swapchain creation is fairly expensive, optimize this with the D3D12HDR method.
-            SwapChain1 sc1 = new SwapChain1(DxgiFactory, D3DDevice, Hwnd, ref desc);
-            Output6 output6 = sc1.ContainingOutput.QueryInterface<Output6>();
-
-            switch (output6.Description1.ColorSpace)
+            using (SwapChain1 sc1 = new SwapChain1(DxgiFactory, D3DDevice, Hwnd, ref desc))
             {
-                case ColorSpaceType.RgbFullG2084NoneP2020:
-                    return true;
+                Output6 output6 = sc1.ContainingOutput.QueryInterface<Output6>();
 
-                case ColorSpaceType.RgbFullG22NoneP709:
-                    return false;
+                switch (output6.Description1.ColorSpace)
+                {
+                    case ColorSpaceType.RgbFullG2084NoneP2020:
+                        return true;
 
-                default:
-                    // Unexpected!
-                    return false;
+                    case ColorSpaceType.RgbFullG22NoneP709:
+                        return false;
+
+                    default:
+                        // Unexpected!
+                        return false;
+                }
             }
         }
     }

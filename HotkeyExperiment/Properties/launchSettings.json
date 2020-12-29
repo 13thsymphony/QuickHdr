@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "HotkeyExperiment": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
