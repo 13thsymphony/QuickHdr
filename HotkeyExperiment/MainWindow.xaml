@@ -7,17 +7,12 @@
         xmlns:local="clr-namespace:HotkeyExperiment"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        Loaded="OnLoaded"
         Visibility="Hidden"
         ShowInTaskbar="False">
+
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="NotifyIcon.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
     </Window.Resources>
+
     <Grid>
-        <TextBlock x:Name="Output"></TextBlock>
     </Grid>
 </Window>

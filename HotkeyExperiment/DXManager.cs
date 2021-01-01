@@ -12,6 +12,9 @@ namespace HotkeyExperiment
     /// Minimal functionality to access DirectX to determine the current
     /// HDR/advanced color state of the display.
     /// </summary>
+    /// <remarks>
+    /// TODO: Not multithreading safe.
+    /// </remarks>
     class DXManager
     {
         SharpDX.Direct3D11.Device D3DDevice;
@@ -29,6 +32,7 @@ namespace HotkeyExperiment
 
 #if DEBUG
             DeviceCreationFlags flags = DeviceCreationFlags.Debug;
+            // This requires Native Debugging to be enabled to have any use.
 #else
             DeviceCreationFlags flags = DeviceCreationFlags.None;
 #endif

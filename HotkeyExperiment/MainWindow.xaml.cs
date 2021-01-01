@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -22,10 +24,10 @@ namespace HotkeyExperiment
 {
     /// <summary>
     /// The only purpose for having a Window is to provide the DXManager with a Window handle (HWND).
+    /// Also is used as DataContext for NotifyIcon.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
-        private TaskbarIcon tb;
         private WindowInteropHelper winHelp;
         private DXManager dx;
 
@@ -33,20 +35,91 @@ namespace HotkeyExperiment
         {
             InitializeComponent();
 
-            tb = (TaskbarIcon)FindResource("NotifyIcon");
-
-            HotkeyManager.Current.AddOrReplace("Toggle HDR", Key.H, ModifierKeys.Control | ModifierKeys.Windows, OnHotkey);
-        }
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
             winHelp = new WindowInteropHelper(this);
-            dx = new DXManager(winHelp.Handle);
+            winHelp.EnsureHandle();
         }
 
-        private void OnHotkey(object sender, HotkeyEventArgs e)
+        public IntPtr GetWindowHandle()
         {
-            Output.Text += "HDR State: " + dx.IsHdrActive() + " " + e.Name + "\n";
-            e.Handled = true;
+            return winHelp.Handle;
+        }
+
+        private void ToggleHdr()
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = "ms-settings:display",
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Minimized
+            };
+            var proc = Process.Start(psi);
+
+            //if (proc == null)
+            //{
+            //    Debug.WriteLine("Failed to launch Settings > System > Display page");
+            //    return;
+            //}
+
+            AutomationElement settingsApp = AutomationElement.RootElement.FindFirst
+                (TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, "Settings"));
+
+            if (settingsApp == null)
+            {
+                Debug.WriteLine("Could not access Settings app");
+                return;
+            }
+
+            // TODO: Why is the settings app not being minimized, and why don't I get a proc?
+
+            AutomationElement hdrToggle = settingsApp.FindFirst
+                (TreeScope.Descendants, new PropertyCondition
+                    (AutomationElement.AutomationIdProperty, "SystemSettings_Display_AdvancedColorSupport_ToggleSwitch"));
+
+            if (hdrToggle == null)
+            {
+                Debug.WriteLine("Could not find HDR toggle");
+                return;
+            }
+
+            TogglePattern toggle = (TogglePattern)hdrToggle.GetCurrentPattern(TogglePattern.Pattern);
+            ToggleState currState = toggle.Current.ToggleState;
+            toggle.Toggle();
+
+            Debug.WriteLine("HDR State: " + dx.IsHdrActive());
+        }
+
+        public ICommand ExitCommand
+        {
+            get
+            {
+                return new DelegateCommand
+                {
+                    CommandAction = () => Application.Current.Shutdown()
+                };
+            }
+        }
+
+        public ICommand ToggleHdrCommand
+        {
+            get
+            {
+                return new DelegateCommand
+                {
+                    CommandAction = () => ToggleHdr(),
+                    CanExecuteFunc = () => dx != null
+                };
+            }
+        }
+
+        public ICommand MoreInfoCommand
+        {
+            get
+            {
+                return new DelegateCommand
+                {
+                    CommandAction = () => Process.Start("https://13thsymphony.github.io")
+                };
+            }
         }
     }
 }

@@ -13,10 +13,16 @@
             <ContextMenu>
                 <MenuItem Header="Toggle HDR on/off" />
                 <MenuItem Header="More information" />
+                <Separator />
                 <MenuItem Header="Exit" />
             </ContextMenu>
         </tb:TaskbarIcon.ContextMenu>
-        
+
+        <tb:TaskbarIcon.DataContext>
+            <local:DummyDataContext />
+        </tb:TaskbarIcon.DataContext>
+
     </tb:TaskbarIcon>
+
 
 </ResourceDictionary>
