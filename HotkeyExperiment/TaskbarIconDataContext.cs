@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace HotkeyExperiment
 {
-    class DummyDataContext
+    public class TaskbarIconDataContext
     {
         public ICommand MoreInfoCommand
         {
@@ -17,7 +17,16 @@ namespace HotkeyExperiment
             {
                 return new DelegateCommand
                 {
-                    CommandAction = () => Process.Start("https://13thsymphony.github.io")
+                    CommandAction = () =>
+                    {
+                        ProcessStartInfo psi = new ProcessStartInfo
+                        {
+                            FileName = "https://13thsymphony.github.io",
+                            UseShellExecute = true
+                        };
+
+                        Process.Start(psi);
+                    }
                 };
             }
         }
@@ -29,6 +38,17 @@ namespace HotkeyExperiment
                 return new DelegateCommand
                 {
                     CommandAction = () => Application.Current.Shutdown()
+                };
+            }
+        }
+
+        public ICommand ToggleHdrCommand
+        {
+            get
+            {
+                return new DelegateCommand
+                {
+                    CommandAction = () => ((App)Application.Current).ToggleHdr()
                 };
             }
         }

@@ -29,7 +29,7 @@ namespace HotkeyExperiment
         {
             InitializeComponent();
 
-            TbIcon = (TaskbarIcon)FindResource("NotifyIcon");
+            TbIcon = (TaskbarIcon)FindResource("TaskbarIconRes");
 
             HotkeyManager.Current.AddOrReplace("Toggle HDR", Key.H, ModifierKeys.Control | ModifierKeys.Windows, OnHotkey);
 
@@ -43,10 +43,16 @@ namespace HotkeyExperiment
 
         private void OnHotkey(object sender, HotkeyEventArgs e)
         {
-            var result = Settings.SetHdrToggle();
+            var result = Settings.ToggleHdr();
             Debug.WriteLine("Hotkey CTRL+WIN+H invoked. Was successful: " + result);
 
             e.Handled = true;
+        }
+
+        public void ToggleHdr()
+        {
+            var result = Settings.ToggleHdr();
+            Debug.WriteLine("ToggleHdr called. Was successful: " + result);
         }
     }
 }

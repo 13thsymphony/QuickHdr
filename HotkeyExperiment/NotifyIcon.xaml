@@ -3,23 +3,22 @@
                     xmlns:tb="http://www.hardcodet.net/taskbar"
                     xmlns:local="clr-namespace:HotkeyExperiment">
 
+    <ContextMenu x:Key="SysTrayContextMenu">
+        <MenuItem Header="Toggle HDR on/off" Command="{Binding ToggleHdrCommand}"/>
+        <MenuItem Header="More information" Command="{Binding MoreInfoCommand}"/>
+        <Separator />
+        <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+    </ContextMenu>
+
     <tb:TaskbarIcon
-        x:Key="NotifyIcon"
+        x:Key="TaskbarIconRes"
         IconSource="pack://application:,,,/icons/hdr_bw.ico"
         ToolTipText="Quick HDR"
-        MenuActivation="LeftOrRightClick">
-        
-        <tb:TaskbarIcon.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="Toggle HDR on/off" />
-                <MenuItem Header="More information" />
-                <Separator />
-                <MenuItem Header="Exit" />
-            </ContextMenu>
-        </tb:TaskbarIcon.ContextMenu>
+        MenuActivation="LeftOrRightClick"
+        ContextMenu="{StaticResource SysTrayContextMenu}">
 
         <tb:TaskbarIcon.DataContext>
-            <local:DummyDataContext />
+            <local:TaskbarIconDataContext />
         </tb:TaskbarIcon.DataContext>
 
     </tb:TaskbarIcon>

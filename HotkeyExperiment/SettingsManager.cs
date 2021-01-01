@@ -25,15 +25,19 @@ namespace HotkeyExperiment
         /// 
         /// </summary>
         /// <returns>Whether we have a valid Automation handle to the Settings Display page</returns>
-        private bool LaunchSettingsApp()
+        private async Task<bool> LaunchSettingsAppAsync()
         {
-            var psi = new ProcessStartInfo
-            {
-                FileName = "ms-settings:display",
-                UseShellExecute = true,
-                WindowStyle = ProcessWindowStyle.Minimized
-            };
-            var proc = Process.Start(psi);
+            bool result = await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:display"));
+
+            //var psi = new ProcessStartInfo
+            //{
+            //    FileName = "ms-settings:display",
+            //    UseShellExecute = false,
+            //    WindowStyle = ProcessWindowStyle.Minimized
+            //};
+            //var proc = Process.Start(psi);
+
+            await Task.Delay(300); // Workaround to ensure that UI has been fully loaded.
 
             SettingsApp = AutomationElement.RootElement.FindFirst
                 (TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, "Settings"));
@@ -45,9 +49,9 @@ namespace HotkeyExperiment
         /// 
         /// </summary>
         /// <returns>Whether the operation succeeded</returns>
-        public bool SetHdrToggle()
+        public async Task<bool> ToggleHdr()
         {
-            if (!LaunchSettingsApp())
+            if (!await LaunchSettingsAppAsync())
             {
                 Debug.WriteLine("Could not activate Settings app");
                 return false;
@@ -64,16 +68,9 @@ namespace HotkeyExperiment
             }
 
             TogglePattern toggle = (TogglePattern)hdrToggle.GetCurrentPattern(TogglePattern.Pattern);
-            toggle.Current.
             toggle.Toggle();
 
             return true;
         }
-    }
-
-    struct HdrResult
-    {
-        public bool WasToggleSuccessful;
-        public bool CurrentHdrState;
     }
 }
