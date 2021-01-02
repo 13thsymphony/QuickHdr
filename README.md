@@ -10,10 +10,11 @@ In addition, we strongly recommend that you update to the latest version of Wind
 
 ## Instructions
 1. Launch Quick HDR.
-2. If you'd like to start Quick HDR automatically when you login to Windows, follow the instructions [here](https://support.microsoft.com/en-us/windows/add-an-app-to-run-automatically-at-startup-in-windows-10-150da165-dcd9-7230-517b-cf3c295d89dd).
+2. Quick HDR automatically registers itself to start automatically when you login. You can enable/disable this via [Startup Manager](https://support.microsoft.com/en-us/windows/change-which-apps-run-automatically-at-startup-in-windows-10-9115d841-735e-488d-e749-9ba301d441e6).
 3. Press *CTRL + WIN + H* to toggle HDR on and off. You will see the Settings app open (minimized) as the app is accessing HDR controls via the Settings app. You will also see the screen momentarily flash black as the display switches between HDR and SDR modes.
-4. You can quickly see whether HDR is currently on or off with the system tray icon to the right of the taskbar.
-5. If you click the system tray icon, a popup menu will let you turn HDR on and off (same as the hotkey), close Quick HDR, 
+4. You'll see a popup indicating what the new HDR mode is.
+5. If you click the system tray icon, a popup menu will let you turn HDR on and off (same as the hotkey), or to exit Quick HDR, 
 
 ## Limitations and notes
 * Quick HDR currently only supports HDR settings on the primary display. If you have a multi-monitor system, you can change this by opening Settings > System > Display and looking for the "Make this my main display" control.
+* Quick HDR relies on UI Automation to automatically access and drive the Settings app. You will see the Settings app load whenever you toggle HDR on and off. In addition, this method is not 100% reliable and sometimes will have no effect. In most cases, just try toggling HDR again. Feel free to close the Settings app as Quick HDR will automatically relaunch it when needed.
