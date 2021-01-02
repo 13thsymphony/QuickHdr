@@ -8,7 +8,7 @@
     <StartupObject>QuickHdr.App</StartupObject>
     <Authors>13thsymphony</Authors>
     <Product />
-    <Platforms>AnyCPU</Platforms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

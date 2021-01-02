@@ -9,7 +9,7 @@
   <Identity
     Name="884581de-7c31-4f5e-a92a-e7a77f41d4c8"
     Publisher="CN=simon"
-    Version="0.1.1.0" />
+    Version="0.1.5.0" />
 
   <Properties>
     <DisplayName>AppPackage</DisplayName>
