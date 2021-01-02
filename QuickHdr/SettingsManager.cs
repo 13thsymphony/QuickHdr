@@ -31,15 +31,13 @@ namespace QuickHdr
         /// <returns>Whether we have a valid Automation handle to the Settings Display page</returns>
         private async Task<bool> LaunchSettingsAppAsync()
         {
-            bool result = await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:display"));
-
-            //var psi = new ProcessStartInfo
-            //{
-            //    FileName = "ms-settings:display",
-            //    UseShellExecute = false,
-            //    WindowStyle = ProcessWindowStyle.Minimized
-            //};
-            //var proc = Process.Start(psi);
+            var psi = new ProcessStartInfo
+            {
+                FileName = "ms-settings:display",
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Minimized
+            };
+            var proc = Process.Start(psi);
 
             await Task.Delay(300); // Workaround to ensure that UI has been fully loaded.
 

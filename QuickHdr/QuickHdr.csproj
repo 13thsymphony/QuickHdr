@@ -2,10 +2,13 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>icons\hdr_bw.ico</ApplicationIcon>
     <StartupObject>QuickHdr.App</StartupObject>
+    <Authors>13thsymphony</Authors>
+    <Product />
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
