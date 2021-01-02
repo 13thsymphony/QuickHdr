@@ -38,21 +38,26 @@ namespace QuickHdr
             Hwnd = MWin.GetWindowHandle();
 
             DX = new DXManager(Hwnd);
-            Settings = new SettingsManager(DX);
+            Settings = new SettingsManager(DX, TbIcon);
         }
 
         private void OnHotkey(object sender, HotkeyEventArgs e)
         {
             Debug.WriteLine("Hotkey CTRL+WIN+H invoked.");
-            ToggleHdr();
+            ToggleHdrAsync();
 
             e.Handled = true;
         }
 
-        public void ToggleHdr()
+        public async void ToggleHdrAsync()
         {
-            var result = Settings.ToggleHdr();
+            var result = await Settings.ToggleHdrAsync();
             Debug.WriteLine("ToggleHdr called. Was successful: " + result);
+
+            // Another workaround to wait for the mode change and all OS changes to complete.
+            await Task.Delay(1000);
+
+            TbIcon.ShowBalloonTip( "HDR is " + (DX.IsHdrActive() ? "enabled" : "disabled"), " ", BalloonIcon.Info);
         }
     }
 }

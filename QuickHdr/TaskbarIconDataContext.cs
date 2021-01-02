@@ -48,7 +48,7 @@ namespace QuickHdr
             {
                 return new DelegateCommand
                 {
-                    CommandAction = () => ((App)Application.Current).ToggleHdr()
+                    CommandAction = () => ((App)Application.Current).ToggleHdrAsync()
                 };
             }
         }

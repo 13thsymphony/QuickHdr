@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,10 +16,13 @@ namespace QuickHdr
     {
         private AutomationElement SettingsApp;
         private DXManager DX;
+        private TaskbarIcon TB;
+        private AutomationPropertyChangedEventHandler PropHandler;
 
-        public SettingsManager(DXManager dx)
+        public SettingsManager(DXManager dx, TaskbarIcon tb)
         {
             DX = dx;
+            TB = tb;
         }
 
         /// <summary>
@@ -49,8 +53,11 @@ namespace QuickHdr
         /// 
         /// </summary>
         /// <returns>Whether the operation succeeded</returns>
-        public async Task<bool> ToggleHdr()
+        public async Task<bool> ToggleHdrAsync()
         {
+            // Unsure if this is needed. I'm not sure if the event handler will be left dangling in error cases.
+            Automation.RemoveAllEventHandlers();
+
             if (!await LaunchSettingsAppAsync())
             {
                 Debug.WriteLine("Could not activate Settings app");
@@ -70,7 +77,53 @@ namespace QuickHdr
             TogglePattern toggle = (TogglePattern)hdrToggle.GetCurrentPattern(TogglePattern.Pattern);
             toggle.Toggle();
 
+            // TODO: The toggle is immediately updated before the mode change completes, so it's not useful to us.
+            //Automation.AddAutomationPropertyChangedEventHandler(hdrToggle, TreeScope.Element,
+            //     PropHandler = new AutomationPropertyChangedEventHandler(OnHdrToggleUpdated),
+            //     TogglePattern.ToggleStateProperty);
+
             return true;
+        }
+
+        /// <summary>
+        /// TODO: This method isn't used for now.
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="e"></param>
+        private void OnHdrToggleUpdated(object src, AutomationPropertyChangedEventArgs e)
+        {
+            // Make sure the element still exists. Elements such as tooltips
+            // can disappear before the event is processed.
+            AutomationElement sourceElement;
+            try
+            {
+                sourceElement = src as AutomationElement;
+
+                ToggleState state = (ToggleState)e.NewValue;
+
+                switch (state)
+                {
+                    case ToggleState.Off:
+                        Debug.WriteLine("HDR state: OFF");
+                        break;
+
+                    case ToggleState.On:
+                        Debug.WriteLine("HDR state: ON");
+                        break;
+
+                    default:
+                        Debug.WriteLine("HDR state: UNKNOWN");
+                        break;
+                }
+            }
+            catch (ElementNotAvailableException)
+            {
+            }
+            finally
+            {
+                Automation.RemoveAllEventHandlers();
+            }
+
         }
     }
 }

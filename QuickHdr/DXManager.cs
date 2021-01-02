@@ -25,6 +25,11 @@ namespace QuickHdr
         {
             Hwnd = windowHandle;
 
+            CreateDeviceDependentResources();
+        }
+
+        private void CreateDeviceDependentResources()
+        {
             SharpDX.Direct3D.FeatureLevel[] featureLevels =
             {
                 SharpDX.Direct3D.FeatureLevel.Level_11_0 // This is practically the min requirement for HDR support.
@@ -47,6 +52,11 @@ namespace QuickHdr
 
         public bool IsHdrActive()
         {
+            if (DxgiFactory.IsCurrent == false)
+            {
+                CreateDeviceDependentResources();
+            }
+
             SwapChainDescription1 desc = new SwapChainDescription1
             {
                 AlphaMode = AlphaMode.Ignore,
