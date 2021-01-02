@@ -21,8 +21,6 @@
 
   <ItemGroup>
     <Resource Include="icons\hdr_bw.ico" />
-    <Resource Include="icons\hdr_off.ico" />
-    <Resource Include="icons\hdr_on.ico" />
   </ItemGroup>
 
 </Project>
