@@ -3,7 +3,9 @@ Quick HDR is a simple background app that provides quick control over Windows HD
 
 Quick HDR uses Windows accessibility technology to automatically access and drive the Settings app (Settings > System > Display page). This means that Quick HDR will open the Settings app in the background when triggered.
 
-## System requirements
+## How to install
+*Note:* For now, you have to build from source (see below).
+
 Quick HDR is only useful on systems that [support Windows HDR](https://support.microsoft.com/en-us/windows/display-requirements-for-hdr-video-in-windows-10-192f362e-1245-e14d-3d3f-4b3fc606b80f).
 
 In addition, we strongly recommend that you update to the latest version of Windows 10 and the latest graphics driver. There is no technical limitation to supporting older OSes and drivers, but updating gives you the latest bugfixes and feature improvements for HDR Support.
@@ -18,3 +20,11 @@ In addition, we strongly recommend that you update to the latest version of Wind
 ## Limitations and notes
 * Quick HDR currently only supports HDR settings on the primary display. If you have a multi-monitor system, you can change this by opening Settings > System > Display and looking for the "Make this my main display" control.
 * Quick HDR relies on UI Automation to automatically access and drive the Settings app. You will see the Settings app load whenever you toggle HDR on and off. In addition, this method is not 100% reliable and sometimes will have no effect. In most cases, just try toggling HDR again. Feel free to close the Settings app as Quick HDR will automatically relaunch it when needed.
+
+## How to build
+Requirements:
+- Visual Studio 2019 or later with the .NET Desktop Development and Universal Windows Platform workloads
+   - Specifically, this app uses .NET 5 and the [Windows Application Packaging](https://docs.microsoft.com/en-us/windows/msix/desktop/desktop-to-uwp-packaging-dot-net) frameworks.
+
+1. The main project (QuickHdr) is a regular WPF app and you can run it directly as a loose-file app.
+2. If you want to package it as an MSIX installer for easy distribution, [Publish the AppPackage project](https://docs.microsoft.com/en-us/windows/msix/package/packaging-uwp-apps#generate-an-app-package-upload-file-for-store-submission).
