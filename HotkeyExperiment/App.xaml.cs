@@ -43,8 +43,8 @@ namespace HotkeyExperiment
 
         private void OnHotkey(object sender, HotkeyEventArgs e)
         {
-            var result = Settings.ToggleHdr();
-            Debug.WriteLine("Hotkey CTRL+WIN+H invoked. Was successful: " + result);
+            Debug.WriteLine("Hotkey CTRL+WIN+H invoked.");
+            ToggleHdr();
 
             e.Handled = true;
         }
