@@ -12,7 +12,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 using NHotkey;
 using NHotkey.Wpf;
 
-namespace HotkeyExperiment
+namespace QuickHdr
 {
     /// <summary>
     /// Interaction logic for App.xaml

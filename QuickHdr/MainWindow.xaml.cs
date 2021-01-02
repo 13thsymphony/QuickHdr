@@ -20,7 +20,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 using NHotkey;
 using NHotkey.Wpf;
 
-namespace HotkeyExperiment
+namespace QuickHdr
 {
     /// <summary>
     /// The only purpose for having a Window is to provide the DXManager with a Window handle (HWND).

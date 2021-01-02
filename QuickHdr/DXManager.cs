@@ -6,7 +6,7 @@ using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 
-namespace HotkeyExperiment
+namespace QuickHdr
 {
     /// <summary>
     /// Minimal functionality to access DirectX to determine the current

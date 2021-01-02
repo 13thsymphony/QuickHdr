@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
 
-namespace HotkeyExperiment
+namespace QuickHdr
 {
     /// <summary>
     /// Provides support for driving the Settings app to change HDR settings. Uses UI Automation.

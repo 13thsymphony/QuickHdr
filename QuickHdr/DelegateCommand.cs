@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace HotkeyExperiment
+namespace QuickHdr
 {
     /// <summary>
     /// Minimal implementation of ICommand.
