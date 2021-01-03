@@ -54,10 +54,13 @@ namespace QuickHdr
             var result = await Settings.ToggleHdrAsync();
             Debug.WriteLine("ToggleHdr called. Was successful: " + result);
 
-            // Another workaround to wait for the mode change and all OS changes to complete.
-            await Task.Delay(1000);
+            if (result == true)
+            {
+                // Another workaround to wait for the mode change and all OS changes to complete.
+                await Task.Delay(1000);
 
-            TbIcon.ShowBalloonTip( "HDR is " + (DX.IsHdrActive() ? "enabled" : "disabled"), " ", BalloonIcon.Info);
+                TbIcon.ShowBalloonTip("HDR is " + (DX.IsHdrActive() ? "active" : "inactive"), " ", BalloonIcon.Info);
+            }
         }
     }
 }

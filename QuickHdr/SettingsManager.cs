@@ -58,24 +58,41 @@ namespace QuickHdr
 
             if (!await LaunchSettingsAppAsync())
             {
-                Debug.WriteLine("Could not activate Settings app");
+                TB.ShowBalloonTip("Couldn't launch the Settings app", "Try the command again", BalloonIcon.Error);
                 return false;
             }
 
-            AutomationElement hdrToggle = SettingsApp.FindFirst
-                (TreeScope.Descendants, new PropertyCondition
-                    (AutomationElement.AutomationIdProperty, "SystemSettings_Display_AdvancedColorSupport_ToggleSwitch"));
+            var hdrEnabledCondition = new AndCondition(
+                    new PropertyCondition(AutomationElement.AutomationIdProperty, "SystemSettings_Display_AdvancedColorSupport_ToggleSwitch"),
+                    new PropertyCondition(AutomationElement.IsEnabledProperty, true)
+                    );
+
+            AutomationElement hdrToggle = SettingsApp.FindFirst(TreeScope.Descendants, hdrEnabledCondition);
 
             if (hdrToggle == null)
             {
-                Debug.WriteLine("Could not access HDR toggle UI element");
+                // Some laptops will disable HDR when on battery power.
+                var hdrDisabledCondition = new AndCondition(
+                    new PropertyCondition(AutomationElement.AutomationIdProperty, "SystemSettings_Display_AdvancedColorSupport_ToggleSwitch"),
+                    new PropertyCondition(AutomationElement.IsEnabledProperty, false)
+                    );
+
+                if (SettingsApp.FindFirst(TreeScope.Descendants, hdrDisabledCondition) != null)
+                {
+                    TB.ShowBalloonTip("HDR is temporarily disabled", "Confirm that your power settings allow HDR", BalloonIcon.Error);
+                }
+                else
+                {
+                    TB.ShowBalloonTip("HDR toggle couldn't be found", "Confirm that your PC supports HDR", BalloonIcon.Error);
+                }
+
                 return false;
             }
 
             TogglePattern toggle = (TogglePattern)hdrToggle.GetCurrentPattern(TogglePattern.Pattern);
             toggle.Toggle();
 
-            // TODO: The toggle is immediately updated before the mode change completes, so it's not useful to us.
+            // TODO: The toggle is updated before the mode change completes, so it's not useful to us.
             //Automation.AddAutomationPropertyChangedEventHandler(hdrToggle, TreeScope.Element,
             //     PropHandler = new AutomationPropertyChangedEventHandler(OnHdrToggleUpdated),
             //     TogglePattern.ToggleStateProperty);

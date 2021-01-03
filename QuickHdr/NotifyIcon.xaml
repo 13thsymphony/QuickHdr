@@ -5,7 +5,7 @@
 
     <ContextMenu x:Key="SysTrayContextMenu">
         <MenuItem Header="Toggle HDR on/off" Command="{Binding ToggleHdrCommand}"/>
-        <MenuItem Header="More information" Command="{Binding MoreInfoCommand}"/>
+        <MenuItem Header="Help and more info" Command="{Binding MoreInfoCommand}"/>
         <Separator />
         <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
     </ContextMenu>
