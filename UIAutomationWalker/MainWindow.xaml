@@ -1,0 +1,30 @@
+﻿<Window x:Class="UIAutomationWalker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UIAutomationWalker"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Margin="5">Window name:</TextBlock>
+            <TextBox x:Name="TxtWindowName" Margin="5" MinWidth="100"></TextBox>
+            <TextBlock Margin="5">Recursion depth:</TextBlock>
+            <ComboBox Margin="5" x:Name="RecursionCombo">
+                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem>2</ComboBoxItem>
+                <ComboBoxItem>3</ComboBoxItem>
+                <ComboBoxItem>4</ComboBoxItem>
+                <ComboBoxItem IsSelected="true">5</ComboBoxItem>
+                <ComboBoxItem>6</ComboBoxItem>
+                <ComboBoxItem>7</ComboBoxItem>
+            </ComboBox>
+            <Button Click="Button_Click" Margin="5">Walk UI Automation Tree</Button>
+        </StackPanel>
+        <TextBlock x:Name="Output" Margin="5"></TextBlock>
+        <TreeView x:Name="UITree" Margin="5">
+            <TreeViewItem x:Name="UIRootElement"></TreeViewItem>
+        </TreeView>
+    </StackPanel>
+</Window>

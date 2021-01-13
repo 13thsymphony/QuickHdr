@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickHdr", "QuickHdr\QuickH
 EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "AppPackage", "AppPackage\AppPackage.wapproj", "{8253CFFD-B7B2-4D15-9011-E22826538531}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIAutomationWalker", "UIAutomationWalker\UIAutomationWalker.csproj", "{F5986C2F-8F23-4C66-94E7-2C12DB223034}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,26 @@ Global
 		{8253CFFD-B7B2-4D15-9011-E22826538531}.Release|x86.ActiveCfg = Release|x86
 		{8253CFFD-B7B2-4D15-9011-E22826538531}.Release|x86.Build.0 = Release|x86
 		{8253CFFD-B7B2-4D15-9011-E22826538531}.Release|x86.Deploy.0 = Release|x86
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Debug|ARM.Build.0 = Debug|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Debug|x64.Build.0 = Debug|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Debug|x86.Build.0 = Debug|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Release|ARM.Build.0 = Release|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Release|ARM64.Build.0 = Release|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Release|x64.ActiveCfg = Release|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Release|x64.Build.0 = Release|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Release|x86.ActiveCfg = Release|Any CPU
+		{F5986C2F-8F23-4C66-94E7-2C12DB223034}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
