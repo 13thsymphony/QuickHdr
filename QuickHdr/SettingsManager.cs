@@ -14,7 +14,7 @@ namespace QuickHdr
     /// </summary>
     class SettingsManager
     {
-        private AutomationElement SettingsApp;
+        private AutomationElement SettingsApp = null;
         private DXManager DX;
         private TaskbarIcon TB;
         private AutomationPropertyChangedEventHandler PropHandler;
@@ -39,12 +39,39 @@ namespace QuickHdr
             };
             var proc = Process.Start(psi);
 
-            await Task.Delay(300); // Workaround to ensure that UI has been fully loaded.
+            // Wait a short period for the window to finish loading.
+            for (var retries = 3; retries >= 1; retries--)
+            {
+                Debug.WriteLine("Checking for Settings Window, tries remaining: " + retries);
 
-            SettingsApp = AutomationElement.RootElement.FindFirst
-                (TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, "Settings"));
+                await Task.Delay(200);
+
+                SettingsApp = AutomationElement.RootElement.FindFirst
+                    (TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, "Settings"));
+
+                if (SettingsApp != null) break;
+            }
 
             return (SettingsApp != null);
+        }
+
+        public void MinimizeSettingsApp()
+        {
+            if (SettingsApp == null)
+            {
+                return;
+            }
+
+            var minCondition = new PropertyCondition(AutomationElement.AutomationIdProperty, "Minimize");
+            var min = SettingsApp.FindFirst(TreeScope.Descendants, minCondition);
+
+            if (min == null)
+            {
+                return;
+            }
+
+            InvokePattern invoke = (InvokePattern)min.GetCurrentPattern(InvokePattern.Pattern);
+            invoke.Invoke();
         }
 
         /// <summary>
@@ -59,6 +86,27 @@ namespace QuickHdr
             if (!await LaunchSettingsAppAsync())
             {
                 TB.ShowBalloonTip("Couldn't launch the Settings app", "Try the command again", BalloonIcon.Error);
+                return false;
+            }
+
+            // To check if the Display page has finished loading, check for the Night Light element which is available on all normal systems.
+            var nightLightCondition = new PropertyCondition(AutomationElement.AutomationIdProperty, "SystemSettings_Display_BlueLight_AutomaticOnScheduleWithTime_ToggleSwitch");
+            AutomationElement nightLight = null;
+            for (var retries = 5; retries >= 1; retries--)
+            {
+                Debug.WriteLine("Checking for Night Light, tries remaining: " + retries);
+
+                await Task.Delay(200);
+
+                nightLight = SettingsApp.FindFirst(TreeScope.Descendants, nightLightCondition);
+
+                if (nightLight != null) break;
+            }
+
+            if (nightLight == null)
+            {
+                TB.ShowBalloonTip("Display Settings page couldn't be loaded", "Close Settings and try the command again", BalloonIcon.Error);
+
                 return false;
             }
 
@@ -83,7 +131,7 @@ namespace QuickHdr
                 }
                 else
                 {
-                    TB.ShowBalloonTip("HDR toggle couldn't be found", "Confirm that your PC supports HDR", BalloonIcon.Error);
+                    TB.ShowBalloonTip("HDR toggle couldn't be found", "Confirm that your primary display supports HDR", BalloonIcon.Error);
                 }
 
                 return false;

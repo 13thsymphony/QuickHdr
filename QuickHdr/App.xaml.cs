@@ -56,6 +56,8 @@ namespace QuickHdr
 
             if (result == true)
             {
+                Settings.MinimizeSettingsApp();
+
                 // Another workaround to wait for the mode change and all OS changes to complete.
                 await Task.Delay(1000);
 

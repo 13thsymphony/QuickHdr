@@ -1,4 +1,6 @@
-﻿using System;
+﻿// #define USE_DX_DEBUG
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -35,7 +37,7 @@ namespace QuickHdr
                 SharpDX.Direct3D.FeatureLevel.Level_11_0 // This is practically the min requirement for HDR support.
             };
 
-#if DEBUG
+#if DEBUG && USE_DX_DEBUG
             DeviceCreationFlags flags = DeviceCreationFlags.Debug;
             // This requires Native Debugging to be enabled to have any use.
 #else
