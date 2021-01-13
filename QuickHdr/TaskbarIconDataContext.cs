@@ -21,7 +21,7 @@ namespace QuickHdr
                     {
                         ProcessStartInfo psi = new ProcessStartInfo
                         {
-                            FileName = "https://13thsymphony.github.io",
+                            FileName = "https://13thsymphony.github.io/quickhdr/",
                             UseShellExecute = true
                         };
 
